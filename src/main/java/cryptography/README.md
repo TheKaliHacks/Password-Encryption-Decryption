@@ -57,7 +57,7 @@ Table of Contents:
 - Please ensure the code passes all tests and follows the project's coding conventions
 
 8. License:
-   This project is licensed under the MIT License. For more details, please refer to the LICENSE.md file.
+   This project is licensed under the MIT License. For more details, please refer to the [LICENSE.md](https://github.com/anonpwnda/PasswordEncryptionDecryption/blob/main/src/main/java/cryptography/LICENSE.md) file.
 
-For any questions or support, please contact [ping@wajahatali.ca].
+For any questions or support, please contact me at ping@wajahatali.ca for any questions you might have.
 
