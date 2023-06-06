@@ -25,8 +25,8 @@ Table of Contents:
 
 3. Installation:
    To use this utility, follow these steps:
-- Clone the project repository: [repository URL]
-- Ensure you have Java [required version] installed
+- Clone the project repository: https://github.com/anonpwnda/PasswordEncryptionDecryption.git
+- Ensure you have Java 8 installed
 - If using encryption with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files, install the policy files for unlimited encryption strength
 
 4. Getting Started:
@@ -57,7 +57,7 @@ Table of Contents:
 - Please ensure the code passes all tests and follows the project's coding conventions
 
 8. License:
-   This project is licensed under the MIT License. For more details, please refer to the LICENSE.txt file.
+   This project is licensed under the MIT License. For more details, please refer to the LICENSE.md file.
 
 For any questions or support, please contact [ping@wajahatali.ca].
 
