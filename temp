@@ -1,0 +1,51 @@
+public class PasswordDialog {
+    public static UserCredentials showDialog() {
+        JTextField userIdField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
+
+        JPanel panel = new JPanel(new GridLayout(2, 2));
+        panel.add(new JLabel("User ID:"));
+        panel.add(userIdField);
+        panel.add(new JLabel("Password:"));
+        panel.add(passwordField);
+
+        int option = JOptionPane.showOptionDialog(
+                null,
+                panel,
+                "Enter your credentials",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                null);
+
+        if (option == JOptionPane.OK_OPTION) {
+            String userId = userIdField.getText();
+            String password = new String(passwordField.getPassword());
+            return new UserCredentials(userId, password);
+        } else {
+            // User canceled or closed the dialog without entering credentials
+            JOptionPane.showMessageDialog(null, "Credentials input canceled.", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+}
+---
+
+public class UserCredentials {
+    private String userId;
+    private String password;
+
+    public UserCredentials(String userId, String password) {
+        this.userId = userId;
+        this.password = password;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+}
