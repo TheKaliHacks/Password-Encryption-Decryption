@@ -1,0 +1,65 @@
+package cryptography;
+
+import javax.crypto.SecretKey;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.Properties;
+
+public class PasswordInitializer {
+    private static final String CONFIG_FILE = "src/main/java/cryptography/config.properties";
+
+    public static void main(String[] args) {
+        // Generate secret key and initialization vector
+        SecretKey secretKey = CustomKeyGenerator.generateSecretKey();
+        byte[] initializationVector = CustomKeyGenerator.generateInitializationVector();
+
+        // Get password from the user using GUI
+        String password = PasswordDialog.showDialog();
+
+        // Encrypt the password
+        String encryptedPassword = PasswordEncryptor.encrypt(password, secretKey, initializationVector);
+
+        // Store the encrypted password in the configuration file
+        writePasswordToConfigFile(encryptedPassword, secretKey, initializationVector);
+
+        System.out.println("Password initialized successfully.");
+    }
+
+    private static void writePasswordToConfigFile(String encryptedPassword, SecretKey secretKey, byte[] initializationVector) {
+        try {
+            // Create the directory if it doesn't exist
+            String directoryPath = CONFIG_FILE.substring(0, CONFIG_FILE.lastIndexOf('/'));
+            Files.createDirectories(Paths.get(directoryPath));
+
+            File configFile = new File(CONFIG_FILE);
+            if (!configFile.exists()) {
+                configFile.createNewFile();
+            }
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(configFile)) {
+                Properties properties = new Properties();
+                properties.setProperty("password", encryptedPassword);
+                properties.setProperty("secretKey", Base64.getEncoder().encodeToString(secretKey.getEncoded()));
+                properties.setProperty("initializationVector", Base64.getEncoder().encodeToString(initializationVector));
+                properties.store(fileOutputStream, null);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to write to configuration file.", e);
+        }
+    }
+}
+-----------
+
+package cryptography;
+
+import javax.swing.JOptionPane;
+
+public class PasswordDialog {
+    public static String showDialog() {
+        return JOptionPane.showInputDialog("Enter your password:");
+    }
+}
