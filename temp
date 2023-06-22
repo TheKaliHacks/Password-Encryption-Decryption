@@ -67,19 +67,20 @@ public class UserCredentials {
         writeUserIdToFile(userId);
     }
 
- private static void writeUserIdToFile(String userId) {
+private static void writeUserIdToFile(String userId) {
     try {
         File file = new File(USER_ID_FILE);
         if (!file.exists()) {
             file.createNewFile();
         }
-        PrintWriter writer = new PrintWriter(new FileWriter(file, false));
+        PrintWriter writer = new PrintWriter(new FileWriter(file));
         writer.println(userId);
         writer.close();
     } catch (IOException e) {
         System.err.println("Failed to write user ID to file: " + e.getMessage());
     }
 }
+
 
 
     private static String readUserIdFromFile() {
