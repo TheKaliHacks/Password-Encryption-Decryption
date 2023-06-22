@@ -1,5 +1,3 @@
-package cryptography;
-
 import javax.crypto.SecretKey;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,8 +15,8 @@ public class PasswordInitializer {
         SecretKey secretKey = CustomKeyGenerator.generateSecretKey();
         byte[] initializationVector = CustomKeyGenerator.generateInitializationVector();
 
-        // Get password from the user using GUI
-        String password = PasswordDialog.showDialog();
+        // Get password from GUI
+        String password = PasswordDialog.getPasswordFromUser();
 
         // Encrypt the password
         String encryptedPassword = PasswordEncryptor.encrypt(password, secretKey, initializationVector);
@@ -36,8 +34,13 @@ public class PasswordInitializer {
             Files.createDirectories(Paths.get(directoryPath));
 
             File configFile = new File(CONFIG_FILE);
+
+            // Check if the config file exists
             if (!configFile.exists()) {
-                configFile.createNewFile();
+                // Create a new config file
+                if (!configFile.createNewFile()) {
+                    throw new RuntimeException("Failed to create configuration file.");
+                }
             }
 
             try (FileOutputStream fileOutputStream = new FileOutputStream(configFile)) {
@@ -50,16 +53,5 @@ public class PasswordInitializer {
         } catch (IOException e) {
             throw new RuntimeException("Failed to write to configuration file.", e);
         }
-    }
-}
------------
-
-package cryptography;
-
-import javax.swing.JOptionPane;
-
-public class PasswordDialog {
-    public static String showDialog() {
-        return JOptionPane.showInputDialog("Enter your password:");
     }
 }
