@@ -49,3 +49,44 @@ public class UserCredentials {
         return password;
     }
 }
+-------------
+
+
+
+  private static final String USER_ID_FILE = "user_id.txt"; // File path to store the user ID
+
+    public static String getUserId() {
+        if (userId == null) {
+            userId = readUserIdFromFile();
+        }
+        return userId;
+    }
+
+    public static void setUserId(String userId) {
+        PasswordInitializer.userId = userId;
+        writeUserIdToFile(userId);
+    }
+
+ private static void writeUserIdToFile(String userId) {
+    try {
+        File file = new File(USER_ID_FILE);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        PrintWriter writer = new PrintWriter(new FileWriter(file, false));
+        writer.println(userId);
+        writer.close();
+    } catch (IOException e) {
+        System.err.println("Failed to write user ID to file: " + e.getMessage());
+    }
+}
+
+
+    private static String readUserIdFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(USER_ID_FILE))) {
+            return reader.readLine();
+        } catch (IOException e) {
+            System.err.println("Failed to read user ID from file: " + e.getMessage());
+        }
+        return null;
+    }
